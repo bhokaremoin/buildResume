@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { X } from "react-feather";
 import InputControl from "./InputControl";
 function Editor(props) {
   const sections = props.sections;
@@ -614,12 +615,12 @@ function Editor(props) {
                   <p>
                     {sections[activeSectionKey]} {index + 1}
                   </p>
-                  {/* <X
+                  <X
                     onClick={(event) => {
                       event.stopPropagation();
                       handleDeleteDetail(index);
                     }}
-                  /> */}
+                  />
                 </div>
               ))
             : ""}
