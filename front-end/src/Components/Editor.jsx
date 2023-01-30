@@ -1,7 +1,8 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X } from "react-feather";
 import InputControl from "./InputControl";
+import styles from "./Styles/Editor.module.css";
 function Editor(props) {
   const sections = props.sections;
   const information = props.information;
@@ -24,11 +25,12 @@ function Editor(props) {
     phone: activeInformation?.detail?.phone || "",
     email: activeInformation?.detail?.email || "",
   });
-  const handlePointsUpdate = (value, index) => {
+  const handlePointUpdate = (value, index) => {
     const tempValues = { ...values };
     if (!Array.isArray(tempValues.points)) {
       tempValues.points = [];
     }
+    tempValues.points[index] = value;
     setValues(tempValues);
   };
 
@@ -329,7 +331,7 @@ function Editor(props) {
   );
   const generateBody = () => {
     switch (sections[activeSectionKey]) {
-      case sections.basicInfoBody:
+      case sections.basicInfo:
         return basicInfoBody;
       case sections.workExp:
         return workExpBody;
@@ -473,6 +475,8 @@ function Editor(props) {
         }));
         break;
       }
+      default:
+        return null;
     }
   };
   const handleAddNew = () => {

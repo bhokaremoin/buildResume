@@ -1,4 +1,14 @@
-import React, { useRef } from "react";
+// eslint-disable-next-line
+import React, { useRef, forwardRef } from "react";
+import {
+  AtSign,
+  Calendar,
+  GitHub,
+  Linkedin,
+  MapPin,
+  Paperclip,
+  Phone,
+} from "react-feather";
 import { useEffect } from "react";
 import { useState } from "react";
 import styles from "./Styles/Resume.module.css";
@@ -31,7 +41,7 @@ const Resume = forwardRef((props, ref) => {
         key={"wrokExp"}
         draggable
         onDragOver={() => setTarget(info.workExp?.id)}
-        onDrageEnd={() => setSource(infor.workExp?.id)}
+        onDragEnd={() => setSource(info.workExp?.id)}
         className={`${styles.section} ${
           info.workExp?.sectionTitle ? "" : styles.hidden
         }`}
@@ -65,7 +75,15 @@ const Resume = forwardRef((props, ref) => {
               ) : (
                 <div />
               )}
-              {item.location ? <p className={styles.date}>Remote</p> : <span />}
+              {item.location ? (
+                <p className={styles.date}>
+                  {" "}
+                  <MapPin />
+                  Remote
+                </p>
+              ) : (
+                <span />
+              )}
               {item.points?.length > 0 ? (
                 <ul className={styles.points}>
                   {item.points?.map((ele, index) => (
@@ -86,7 +104,7 @@ const Resume = forwardRef((props, ref) => {
       <div
         key={"project"}
         draggable
-        onDragOver={() => seTarget(info.project?.id)}
+        onDragOver={() => setTarget(info.project?.id)}
         onDragEnd={() => setSource(info.project?.id)}
         className={`${styles.section} ${
           info.project?.sectionTitle ? "" : styles.hidden
@@ -142,7 +160,7 @@ const Resume = forwardRef((props, ref) => {
       <div
         key={"education"}
         draggable
-        onDragOver={() => seTarget(info.education?.id)}
+        onDragOver={() => setTarget(info.education?.id)}
         onDragEnd={() => setSource(info.education?.id)}
         className={`${styles.section} ${
           info.education?.sectionTitle ? "" : styles.hidden
@@ -181,7 +199,7 @@ const Resume = forwardRef((props, ref) => {
       <div
         key={"achievement"}
         draggable
-        onDragOver={() => seTarget(info.achievement?.id)}
+        onDragOver={() => setTarget(info.achievement?.id)}
         onDragEnd={() => setSource(info.achievement?.id)}
         className={`${styles.section} ${
           info.achievement?.sectionTitle ? "" : styles.hidden
@@ -209,7 +227,7 @@ const Resume = forwardRef((props, ref) => {
       <div
         key={"summary"}
         draggable
-        onDragOver={() => seTarget(info.summary?.id)}
+        onDragOver={() => setTarget(info.summary?.id)}
         onDragEnd={() => setSource(info.summary?.id)}
         className={`${styles.section} ${
           info.summary?.sectionTitle ? "" : styles.hidden
@@ -225,7 +243,7 @@ const Resume = forwardRef((props, ref) => {
       <div
         key={"other"}
         draggable
-        onDragOver={() => seTarget(info.other?.id)}
+        onDragOver={() => setTarget(info.other?.id)}
         onDragEnd={() => setSource(info.other?.id)}
         className={`${styles.section} ${
           info.other?.sectionTitle ? "" : styles.hidden
@@ -269,6 +287,9 @@ const Resume = forwardRef((props, ref) => {
     ]);
   }, []);
   useEffect(() => {
+    swapSourceTarget(source, target);
+  }, [source]);
+  useEffect(() => {
     const container = containerRef.current;
     if (!props.activeColor || !container) return;
     container.style.setProperty("--color", props.activeColor);
@@ -283,6 +304,7 @@ const Resume = forwardRef((props, ref) => {
           <div className={styles.links}>
             {info.basicInfo?.detail?.email ? (
               <a type="email" className={styles.link}>
+                <AtSign />
                 {info.basicInfo?.detail?.email}
               </a>
             ) : (
