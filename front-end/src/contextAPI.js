@@ -51,6 +51,30 @@ const AppProvider = ({ children }) => {
       detail: "",
     },
   });
+  // const [values, setValues] = useState({
+  //   name: activeInformation?.detail?.name || "",
+  //   title: activeInformation?.detail?.title || "",
+  //   linkedin: activeInformation?.detail?.linkedin || "",
+  //   github: activeInformation?.detail?.github || "",
+  //   phone: activeInformation?.detail?.phone || "",
+  //   email: activeInformation?.detail?.email || "",
+  // });
+  const [values, setValues] = useState({
+    name: "",
+    title: "",
+    linkedin: "",
+    github: "",
+    phone: "",
+    email: "",
+  });
+  const handlePointUpdate = (value, index) => {
+    const tempValues = { ...values };
+    if (!Array.isArray(tempValues.points)) {
+      tempValues.points = [];
+    }
+    tempValues.points[index] = value;
+    setValues(tempValues);
+  };
   return (
     <AppContext.Provider
       value={{
@@ -60,6 +84,9 @@ const AppProvider = ({ children }) => {
         sections,
         information,
         setInformation,
+        values,
+        setValues,
+        handlePointUpdate,
       }}
     >
       {children}

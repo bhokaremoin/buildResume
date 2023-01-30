@@ -14,8 +14,6 @@ import { useState } from "react";
 import styles from "./Styles/Resume.module.css";
 import { useGlobalContext } from "../contextAPI";
 const Resume = forwardRef((props, ref) => {
-  // const information = props.information;
-  // const sections = props.sections;
   const { sections, information } = useGlobalContext();
   const containerRef = useRef();
 
