@@ -1,12 +1,14 @@
-// eslint-disable-next-line
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { X } from "react-feather";
-import { useGlobalContext } from "../contextAPI";
-import InputControl from "./InputControl";
-import styles from "./Styles/Editor.module.css";
-function Editor() {
-  const { sections, information, setInformation } = useGlobalContext();
+
+import InputControl from "../InputControl/InputControl";
+
+import styles from "./Editor.module.css";
+
+function Editor(props) {
+  const sections = props.sections;
+  const information = props.information;
+
   const [activeSectionKey, setActiveSectionKey] = useState(
     Object.keys(sections)[0]
   );
@@ -25,24 +27,23 @@ function Editor() {
     phone: activeInformation?.detail?.phone || "",
     email: activeInformation?.detail?.email || "",
   });
+
   const handlePointUpdate = (value, index) => {
     const tempValues = { ...values };
-    if (!Array.isArray(tempValues.points)) {
-      tempValues.points = [];
-    }
+    if (!Array.isArray(tempValues.points)) tempValues.points = [];
     tempValues.points[index] = value;
     setValues(tempValues);
   };
 
   const workExpBody = (
-    <div className={styles.details}>
+    <div className={styles.detail}>
       <div className={styles.row}>
         <InputControl
           label="Title"
-          placeholder="Enter title Ex: Frontend Developer"
+          placeholder="Enter title eg. Frontend developer"
           value={values.title}
-          onChange={(e) =>
-            setValues((prev) => ({ ...prev, title: e.target.value }))
+          onChange={(event) =>
+            setValues((prev) => ({ ...prev, title: event.target.value }))
           }
         />
         <InputControl
@@ -95,6 +96,7 @@ function Editor() {
           }
         />
       </div>
+
       <div className={styles.column}>
         <label>Enter work description</label>
         <InputControl
@@ -329,6 +331,7 @@ function Editor() {
       />
     </div>
   );
+
   const generateBody = () => {
     switch (sections[activeSectionKey]) {
       case sections.basicInfo:
@@ -362,7 +365,7 @@ function Editor() {
           phone: values.phone,
         };
 
-        setInformation((prev) => ({
+        props.setInformation((prev) => ({
           ...prev,
           [sections.basicInfo]: {
             ...prev[sections.basicInfo],
@@ -385,7 +388,7 @@ function Editor() {
         const tempDetails = [...information[sections.workExp]?.details];
         tempDetails[activeDetailIndex] = tempDetail;
 
-        setInformation((prev) => ({
+        props.setInformation((prev) => ({
           ...prev,
           [sections.workExp]: {
             ...prev[sections.workExp],
@@ -406,7 +409,7 @@ function Editor() {
         const tempDetails = [...information[sections.project]?.details];
         tempDetails[activeDetailIndex] = tempDetail;
 
-        setInformation((prev) => ({
+        props.setInformation((prev) => ({
           ...prev,
           [sections.project]: {
             ...prev[sections.project],
@@ -426,7 +429,7 @@ function Editor() {
         const tempDetails = [...information[sections.education]?.details];
         tempDetails[activeDetailIndex] = tempDetail;
 
-        setInformation((prev) => ({
+        props.setInformation((prev) => ({
           ...prev,
           [sections.education]: {
             ...prev[sections.education],
@@ -439,7 +442,7 @@ function Editor() {
       case sections.achievement: {
         const tempPoints = values.points;
 
-        setInformation((prev) => ({
+        props.setInformation((prev) => ({
           ...prev,
           [sections.achievement]: {
             ...prev[sections.achievement],
@@ -452,7 +455,7 @@ function Editor() {
       case sections.summary: {
         const tempDetail = values.summary;
 
-        setInformation((prev) => ({
+        props.setInformation((prev) => ({
           ...prev,
           [sections.summary]: {
             ...prev[sections.summary],
@@ -465,7 +468,7 @@ function Editor() {
       case sections.other: {
         const tempDetail = values.other;
 
-        setInformation((prev) => ({
+        props.setInformation((prev) => ({
           ...prev,
           [sections.other]: {
             ...prev[sections.other],
@@ -475,10 +478,9 @@ function Editor() {
         }));
         break;
       }
-      default:
-        return null;
     }
   };
+
   const handleAddNew = () => {
     const details = activeInformation?.details;
     if (!details) return;
@@ -486,7 +488,7 @@ function Editor() {
     if (!Object.keys(lastDetail).length) return;
     details?.push({});
 
-    setInformation((prev) => ({
+    props.setInformation((prev) => ({
       ...prev,
       [sections[activeSectionKey]]: {
         ...information[sections[activeSectionKey]],
@@ -502,7 +504,7 @@ function Editor() {
       : "";
     if (!details) return;
     details.splice(index, 1);
-    setInformation((prev) => ({
+    props.setInformation((prev) => ({
       ...prev,
       [sections[activeSectionKey]]: {
         ...information[sections[activeSectionKey]],
@@ -530,7 +532,9 @@ function Editor() {
       companyName: activeInfo?.details
         ? activeInfo.details[0]?.companyName || ""
         : "",
-      college: activeInfo?.details ? activeInfo.details[0]?.college || "" : "",
+      college: activeInfo?.details
+        ? activeInfo.details[0]?.college || ""
+        : "",
       location: activeInfo?.details
         ? activeInfo.details[0]?.location || ""
         : "",
@@ -562,6 +566,7 @@ function Editor() {
   useEffect(() => {
     setActiveInformation(information[sections[activeSectionKey]]);
   }, [information]);
+
   useEffect(() => {
     const details = activeInformation?.details;
     if (!details) return;
@@ -583,32 +588,34 @@ function Editor() {
       college: activeInfo.details[activeDetailIndex]?.college || "",
     });
   }, [activeDetailIndex]);
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         {Object.keys(sections)?.map((key) => (
           <div
-            key={key}
             className={`${styles.section} ${
               activeSectionKey === key ? styles.active : ""
             }`}
+            key={key}
             onClick={() => setActiveSectionKey(key)}
           >
             {sections[key]}
           </div>
         ))}
       </div>
-      \
+
       <div className={styles.body}>
         <InputControl
-          lable="Title"
+          label="Title"
           placeholder="Enter section title"
           value={sectionTitle}
-          onChange={(e) => setSectionTitle(e.target.value)}
+          onChange={(event) => setSectionTitle(event.target.value)}
         />
+
         <div className={styles.chips}>
           {activeInformation?.details
-            ? activeInformation?.details.map((item, index) => (
+            ? activeInformation?.details?.map((item, index) => (
                 <div
                   className={`${styles.chip} ${
                     activeDetailIndex === index ? styles.active : ""
@@ -637,7 +644,9 @@ function Editor() {
             ""
           )}
         </div>
+
         {generateBody()}
+
         <button onClick={handleSubmission}>Save</button>
       </div>
     </div>
