@@ -10,7 +10,9 @@ const Body = () => {
   const resumeRef = useRef();
   return (
     <div className={styles.container}>
-      <p className={styles.heading}>Resume Builder</p>
+      <div style={{ alignContent: "center" }}>
+        <p className={styles.heading}>Resume Builder</p>
+      </div>
       <div className={styles.toolbar}>
         <div className={styles.colors}>
           {colors.map((item) => {
