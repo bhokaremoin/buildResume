@@ -5,14 +5,30 @@ import Resume from "./Resume";
 import styles from "./Styles/Body.module.css";
 import Editor from "./Editor";
 import { useGlobalContext } from "../contextAPI";
+import { useNavigate } from "react-router-dom";
 const Body = () => {
+  const navigate = useNavigate();
   const { colors, activeColor, setActiveColor } = useGlobalContext();
   const resumeRef = useRef();
+  const saveResume = async (e) => {
+    e.preventDefault();
+    const userEmail = localStorage.getItem("userEmail");
+    let response = await fetch("http://localhost:5000/api/saveResume", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: userEmail,
+        resumeDetails: userEmail,
+      }),
+    });
+    if (response.status === 200) {
+      navigate("/resumelist");
+    }
+  };
   return (
     <div className={styles.container}>
-      <div style={{ alignContent: "center" }}>
-        <p className={styles.heading}>Resume Builder</p>
-      </div>
       <div className={styles.toolbar}>
         <div className={styles.colors}>
           {colors.map((item) => {
@@ -43,6 +59,9 @@ const Body = () => {
       <div className={styles.main}>
         <Editor />
         <Resume ref={resumeRef} activeColor={activeColor} />
+      </div>
+      <div>
+        <button onClick={saveResume}>Save Resume</button>
       </div>
     </div>
   );

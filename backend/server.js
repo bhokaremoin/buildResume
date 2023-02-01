@@ -13,6 +13,7 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 app.use("/api", require("./Routes/auth"));
+app.use("/api", require("./Routes/getresume"));
 app.get("/", (req, res) => {
   res.send("Backend server for buildResume App running Successfully !!");
 });

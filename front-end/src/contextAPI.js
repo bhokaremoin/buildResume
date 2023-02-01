@@ -51,14 +51,6 @@ const AppProvider = ({ children }) => {
       detail: "",
     },
   });
-  // const [values, setValues] = useState({
-  //   name: activeInformation?.detail?.name || "",
-  //   title: activeInformation?.detail?.title || "",
-  //   linkedin: activeInformation?.detail?.linkedin || "",
-  //   github: activeInformation?.detail?.github || "",
-  //   phone: activeInformation?.detail?.phone || "",
-  //   email: activeInformation?.detail?.email || "",
-  // });
   const [values, setValues] = useState({
     name: "",
     title: "",

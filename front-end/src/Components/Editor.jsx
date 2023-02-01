@@ -221,7 +221,7 @@ function Editor() {
             })
           }
         >
-          Save
+          Update
         </button>
       </div>
     </div>

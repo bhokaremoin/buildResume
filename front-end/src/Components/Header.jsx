@@ -16,9 +16,15 @@ const Header = () => {
       <div className={styles.right}>
         <img src={resumeSvg} alt="resume-svg" />
       </div>
-      <div>
-        <Link to="/login">Login</Link> <Link to="/signup">Sign Up</Link>
-      </div>
+      {!localStorage.getItem("authToken") ? (
+        <div>
+          <Link to="/login">Login</Link> <Link to="/signup">Sign Up</Link>
+        </div>
+      ) : (
+        <div>
+          <Link to="/build">Build Resume</Link>
+        </div>
+      )}
     </div>
   );
 };

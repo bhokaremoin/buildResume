@@ -1,18 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
-const ResumeList = require("../models/ResumeList");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const jwtSecert = "";
+// const jwtSecert = process.env.REACT_APP_JWT_SECRET;
+const jwtSecert = "securepassword";
 
 router.post("/createuser", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   let hashPassword = await bcrypt.hash(req.body.password, salt);
   try {
     await User.create({
+      name: req.body.name,
       email: req.body.email,
       password: hashPassword,
     }).then(res.json({ success: true }));

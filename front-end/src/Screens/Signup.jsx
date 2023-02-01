@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../Components/Navbar";
 const Signup = () => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
@@ -34,37 +35,42 @@ const Signup = () => {
   };
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={credentials.name}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={credentials.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={credentials.password}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Submit</button>
-        <Link to="/login">Sign In</Link>
-      </form>
+      <div>
+        <Navbar />
+      </div>
+      <div>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="email">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={credentials.name}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={credentials.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="email">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit">Submit</button>
+          <Link to="/login">Sign In</Link>
+        </form>
+      </div>
     </div>
   );
 };
