@@ -1,3 +1,4 @@
+import { Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import ResumeListElement from "../Components/ResumeListElement";
@@ -25,15 +26,21 @@ const ResumeList = () => {
     <div>
       <Navbar />
       <div>
-        {resumeList !== {}
-          ? Array(resumeList.resumeList).map((item) => {
-              return item
-                ? item.map((data, index) => {
-                    return <ResumeListElement key={index} information={data} />;
-                  })
-                : "";
-            })
-          : ""}
+        <Grid container spacing={2}>
+          {resumeList !== {}
+            ? Array(resumeList.resumeList).map((item) => {
+                return item
+                  ? item.map((data, index) => {
+                      return (
+                        <Grid item xs={6}>
+                          <ResumeListElement key={index} information={data} />
+                        </Grid>
+                      );
+                    })
+                  : "";
+              })
+            : ""}
+        </Grid>
       </div>
     </div>
   );

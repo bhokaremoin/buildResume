@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef, forwardRef } from "react";
+// eslint-disable-next-line
+import React, { useRef, forwardRef } from "react";
 import {
   AtSign,
   Calendar,
@@ -8,25 +9,29 @@ import {
   Paperclip,
   Phone,
 } from "react-feather";
+import { useEffect } from "react";
+import { useState } from "react";
 import styles from "./Styles/Resume.module.css";
 import { useGlobalContext } from "../contextAPI";
-const ResumeListElement = (information) => {
+const Resume = forwardRef((props, ref) => {
   const { sections } = useGlobalContext();
-  // const information = information;
+  const containerRef = useRef();
+  const info = props.information;
   const [columns, setColumns] = useState([[], []]);
-  const info = {
-    workExp: information[sections.workExp],
-    project: information[sections.project],
-    achievement: information[sections.achievement],
-    education: information[sections.education],
-    basicInfo: information[sections.basicInfo],
-    summary: information[sections.summary],
-    other: information[sections.other],
+  const [source, setSource] = useState("");
+  const [target, setTarget] = useState("");
+  const getFormattedDate = (value) => {
+    if (!value) return "";
+    const date = new Date(value);
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
   };
   const sectionDiv = {
     [sections.workExp]: (
       <div
         key={"wrokExp"}
+        draggable
+        onDragOver={() => setTarget(info.workExp?.id)}
+        onDragEnd={() => setSource(info.workExp?.id)}
         className={`${styles.section} ${
           info.workExp?.sectionTitle ? "" : styles.hidden
         }`}
@@ -88,6 +93,9 @@ const ResumeListElement = (information) => {
     [sections.project]: (
       <div
         key={"project"}
+        draggable
+        onDragOver={() => setTarget(info.project?.id)}
+        onDragEnd={() => setSource(info.project?.id)}
         className={`${styles.section} ${
           info.project?.sectionTitle ? "" : styles.hidden
         }`}
@@ -141,6 +149,9 @@ const ResumeListElement = (information) => {
     [sections.education]: (
       <div
         key={"education"}
+        draggable
+        onDragOver={() => setTarget(info.education?.id)}
+        onDragEnd={() => setSource(info.education?.id)}
         className={`${styles.section} ${
           info.education?.sectionTitle ? "" : styles.hidden
         }`}
@@ -177,6 +188,9 @@ const ResumeListElement = (information) => {
     [sections.achievement]: (
       <div
         key={"achievement"}
+        draggable
+        onDragOver={() => setTarget(info.achievement?.id)}
+        onDragEnd={() => setSource(info.achievement?.id)}
         className={`${styles.section} ${
           info.achievement?.sectionTitle ? "" : styles.hidden
         }`}
@@ -202,6 +216,9 @@ const ResumeListElement = (information) => {
     [sections.summary]: (
       <div
         key={"summary"}
+        draggable
+        onDragOver={() => setTarget(info.summary?.id)}
+        onDragEnd={() => setSource(info.summary?.id)}
         className={`${styles.section} ${
           info.summary?.sectionTitle ? "" : styles.hidden
         }`}
@@ -215,6 +232,9 @@ const ResumeListElement = (information) => {
     [sections.other]: (
       <div
         key={"other"}
+        draggable
+        onDragOver={() => setTarget(info.other?.id)}
+        onDragEnd={() => setSource(info.other?.id)}
         className={`${styles.section} ${
           info.other?.sectionTitle ? "" : styles.hidden
         }`}
@@ -226,10 +246,29 @@ const ResumeListElement = (information) => {
       </div>
     ),
   };
-  const getFormattedDate = (value) => {
-    if (!value) return "";
-    const date = new Date(value);
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+  const swapSourceTarget = (source, target) => {
+    if (!source || !target) return;
+    const tempColumns = [[...columns[0]], [...columns[1]]];
+    let sourceRowIndex = tempColumns[0].findIndex((item) => item === source);
+    let sourceColumnIndex = 0;
+    if (sourceRowIndex < 0) {
+      sourceColumnIndex = 1;
+      sourceRowIndex = tempColumns[1].findIndex((item) => item === source);
+    }
+
+    let targetRowIndex = tempColumns[0].findIndex((item) => item === target);
+    let targetColumnIndex = 0;
+    if (targetRowIndex < 0) {
+      targetColumnIndex = 1;
+      targetRowIndex = tempColumns[1].findIndex((item) => item === target);
+    }
+
+    const tempSource = tempColumns[sourceColumnIndex][sourceRowIndex];
+    tempColumns[sourceColumnIndex][sourceRowIndex] =
+      tempColumns[targetColumnIndex][targetRowIndex];
+    tempColumns[targetColumnIndex][targetRowIndex] = tempSource;
+    setColumns(tempColumns);
   };
   useEffect(() => {
     setColumns([
@@ -237,53 +276,64 @@ const ResumeListElement = (information) => {
       [sections.workExp, sections.achievement, sections.other],
     ]);
   }, []);
+  useEffect(() => {
+    swapSourceTarget(source, target);
+  }, [source]);
+  // useEffect(() => {
+  //   const container = containerRef.current;
+  //   if (!props.activeColor || !container) return;
+  //   container.style.setProperty("--color", props.activeColor);
+  // }, [props.activeColor]);
+
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <p className={styles.heading}>{info.basicInfo?.detail?.name}</p>
-        <p className={styles.subHeading}>{info.basicInfo?.detail?.title}</p>
-        <div className={styles.links}>
-          {info.basicInfo?.detail?.email ? (
-            <a type="email" className={styles.link}>
-              <AtSign />
-              {info.basicInfo?.detail?.email}
-            </a>
-          ) : (
-            <span />
-          )}
-          {info.basicInfo?.detail?.phone ? (
-            <a className={styles.link}>
-              <Phone /> {info.basicInfo?.detail?.phone}
-            </a>
-          ) : (
-            <span />
-          )}
-          {info.basicInfo?.detail?.linkedin ? (
-            <a className={styles.link}>
-              <Linkedin /> {info.basicInfo?.detail?.linkedin}
-            </a>
-          ) : (
-            <span />
-          )}
-          {info.basicInfo?.detail?.github ? (
-            <a className={styles.link}>
-              <GitHub /> {info.basicInfo?.detail?.github}
-            </a>
-          ) : (
-            <span />
-          )}
+    <div ref={ref}>
+      <div ref={containerRef} className={styles.container}>
+        <div className={styles.header}>
+          <p className={styles.heading}>{info.basicInfo?.detail?.name}</p>
+          <p className={styles.subHeading}>{info.basicInfo?.detail?.title}</p>
+          <div className={styles.links}>
+            {info.basicInfo?.detail?.email ? (
+              <a type="email" className={styles.link}>
+                <AtSign />
+                {info.basicInfo?.detail?.email}
+              </a>
+            ) : (
+              <span />
+            )}
+            {info.basicInfo?.detail?.phone ? (
+              <a className={styles.link}>
+                <Phone /> {info.basicInfo?.detail?.phone}
+              </a>
+            ) : (
+              <span />
+            )}
+            {info.basicInfo?.detail?.linkedin ? (
+              <a className={styles.link}>
+                <Linkedin /> {info.basicInfo?.detail?.linkedin}
+              </a>
+            ) : (
+              <span />
+            )}
+            {info.basicInfo?.detail?.github ? (
+              <a className={styles.link}>
+                <GitHub /> {info.basicInfo?.detail?.github}
+              </a>
+            ) : (
+              <span />
+            )}
+          </div>
         </div>
-      </div>
-      <div className={styles.main}>
-        <div className={styles.col1}>
-          {columns[0].map((item) => sectionDiv[item])}
-        </div>
-        <div className={styles.col2}>
-          {columns[1].map((item) => sectionDiv[item])}
+        <div className={styles.main}>
+          <div className={styles.col1}>
+            {columns[0].map((item) => sectionDiv[item])}
+          </div>
+          <div className={styles.col2}>
+            {columns[1].map((item) => sectionDiv[item])}
+          </div>
         </div>
       </div>
     </div>
   );
-};
+});
 
-export default ResumeListElement;
+export default Resume;
