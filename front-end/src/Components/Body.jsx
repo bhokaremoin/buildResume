@@ -8,11 +8,21 @@ import { useGlobalContext } from "../contextAPI";
 import { useNavigate } from "react-router-dom";
 const Body = () => {
   const navigate = useNavigate();
-  const { colors, activeColor, setActiveColor } = useGlobalContext();
+  const { colors, activeColor, setActiveColor, information, sections } =
+    useGlobalContext();
   const resumeRef = useRef();
   const saveResume = async (e) => {
     e.preventDefault();
     const userEmail = localStorage.getItem("userEmail");
+    const info = {
+      workExp: information[sections.workExp],
+      project: information[sections.project],
+      achievement: information[sections.achievement],
+      education: information[sections.education],
+      basicInfo: information[sections.basicInfo],
+      summary: information[sections.summary],
+      other: information[sections.other],
+    };
     let response = await fetch("http://localhost:5000/api/saveResume", {
       method: "POST",
       headers: {
@@ -20,7 +30,7 @@ const Body = () => {
       },
       body: JSON.stringify({
         email: userEmail,
-        resumeDetails: userEmail,
+        resumeDetails: info,
       }),
     });
     if (response.status === 200) {

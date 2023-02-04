@@ -11,7 +11,7 @@
 }
 
 .heading {
-    margin: 0 auto;
+    margin: 0 auto 0;
     max-width: 500px;
     color: #000;
     font-size: 3.1rem;
@@ -25,7 +25,31 @@
     background-image: linear-gradient(to right, #239ce2, #1369b9);
     color: transparent;
 }
-
+.btnSection{
+    margin: 30px;
+}
 .right img {
     width: 400px;
+}
+.btn{
+    width: fit-content;
+        padding: 6px 16px;
+        border-radius: 5px;
+        background-color: #239ce2;
+        color: #fff;
+        outline: none;
+        border: none;
+        font-weight: 500;
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+        display: inline;
+        gap: 15px;
+        align-items: center;
+        cursor: pointer;
+        transition: 200ms;
+        text-decoration: none;
+        margin: 20px 10px;
+}
+.btn:active{
+    transform: translateY(2px);
 }

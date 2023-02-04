@@ -12,19 +12,26 @@ const Header = () => {
         <p className={styles.heading}>
           Make your own resume. <span>It's Free</span>
         </p>
+        {!localStorage.getItem("authToken") ? (
+          <div className={styles.btnSection}>
+            <Link className={styles.btn} to="/login">
+              Login
+            </Link>{" "}
+            <Link className={styles.btn} to="/signup">
+              Sign Up
+            </Link>
+          </div>
+        ) : (
+          <div className={styles.btnSection}>
+            <Link className={styles.btn} to="/build">
+              Build Resume
+            </Link>
+          </div>
+        )}
       </div>
       <div className={styles.right}>
         <img src={resumeSvg} alt="resume-svg" />
       </div>
-      {!localStorage.getItem("authToken") ? (
-        <div>
-          <Link to="/login">Login</Link> <Link to="/signup">Sign Up</Link>
-        </div>
-      ) : (
-        <div>
-          <Link to="/build">Build Resume</Link>
-        </div>
-      )}
     </div>
   );
 };

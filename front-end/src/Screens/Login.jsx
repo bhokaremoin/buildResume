@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../Components/Navbar";
+import styles from "./Styles/Login.module.css";
 const Login = () => {
   const [credentials, setCredentials] = useState({
     email: "",
@@ -33,28 +35,35 @@ const Login = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={credentials.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={credentials.password}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Login</button>
-        <Link to="/signup">Sign Up</Link>
-      </form>
+      <Navbar />
+      <div className={styles.container}>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.field}>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={credentials.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="email">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
+            />
+          </div>
+          <button className={styles.login} type="submit">
+            Login
+          </button>
+          <Link className={styles.sign} to="/signup">
+            Sign Up
+          </Link>
+        </form>
+      </div>
     </div>
   );
 };
