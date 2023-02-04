@@ -12,7 +12,6 @@ import WorkExpBody from "./Sections/WorkExpBody";
 import BasicInfoBody from "./Sections/BasicInfoBody";
 import AchievementsBody from "./Sections/AchievementsBody";
 import OtherBody from "./Sections/OtherBody";
-import SummaryBody from "./Sections/SummaryBody";
 import handleSubmission from "./handleSubmission";
 function Editor() {
   const { sections, information, setInformation, values, setValues } =
@@ -39,8 +38,6 @@ function Editor() {
         return <EducationBody />;
       case sections.achievement:
         return <AchievementsBody />;
-      case sections.summary:
-        return <SummaryBody />;
       case sections.other:
         return <OtherBody />;
       default:
@@ -122,7 +119,6 @@ function Editor() {
         : activeInfo?.detail?.github || "",
       phone: activeInfo?.detail?.phone || "",
       email: activeInfo?.detail?.email || "",
-      summary: typeof activeInfo?.detail !== "object" ? activeInfo.detail : "",
       other: typeof activeInfo?.detail !== "object" ? activeInfo.detail : "",
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

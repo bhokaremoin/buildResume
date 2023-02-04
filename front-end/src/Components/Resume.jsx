@@ -27,7 +27,6 @@ const Resume = forwardRef((props, ref) => {
     achievement: information[sections.achievement],
     education: information[sections.education],
     basicInfo: information[sections.basicInfo],
-    summary: information[sections.summary],
     other: information[sections.other],
   };
   const getFormattedDate = (value) => {
@@ -223,22 +222,6 @@ const Resume = forwardRef((props, ref) => {
         </div>
       </div>
     ),
-    [sections.summary]: (
-      <div
-        key={"summary"}
-        draggable
-        onDragOver={() => setTarget(info.summary?.id)}
-        onDragEnd={() => setSource(info.summary?.id)}
-        className={`${styles.section} ${
-          info.summary?.sectionTitle ? "" : styles.hidden
-        }`}
-      >
-        <div className={styles.sectionTitle}>{info.summary?.sectionTitle}</div>
-        <div className={styles.content}>
-          <p className={styles.overview}>{info.summary?.detail}</p>
-        </div>
-      </div>
-    ),
     [sections.other]: (
       <div
         key={"other"}
@@ -282,8 +265,8 @@ const Resume = forwardRef((props, ref) => {
   };
   useEffect(() => {
     setColumns([
-      [sections.project, sections.education, sections.summary],
-      [sections.workExp, sections.achievement, sections.other],
+      [sections.project, sections.workExp],
+      [sections.education, sections.achievement, sections.other],
     ]);
   }, []);
   useEffect(() => {

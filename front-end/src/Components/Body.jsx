@@ -6,6 +6,7 @@ import styles from "./Styles/Body.module.css";
 import Editor from "./Editor";
 import { useGlobalContext } from "../contextAPI";
 import { useNavigate } from "react-router-dom";
+import { Grid } from "@mui/material";
 const Body = () => {
   const navigate = useNavigate();
   const { colors, activeColor, setActiveColor, information, sections } =
@@ -20,7 +21,6 @@ const Body = () => {
       achievement: information[sections.achievement],
       education: information[sections.education],
       basicInfo: information[sections.basicInfo],
-      summary: information[sections.summary],
       other: information[sections.other],
     };
     let response = await fetch("http://localhost:5000/api/saveResume", {
@@ -67,8 +67,14 @@ const Body = () => {
         />
       </div>
       <div className={styles.main}>
-        <Editor />
-        <Resume ref={resumeRef} activeColor={activeColor} />
+        <Grid container>
+          <Grid item xs={12} md={6}>
+            <Editor />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Resume ref={resumeRef} activeColor={activeColor} />
+          </Grid>
+        </Grid>
       </div>
       <div>
         <button onClick={saveResume}>Save Resume</button>

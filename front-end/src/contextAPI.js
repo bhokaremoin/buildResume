@@ -11,7 +11,6 @@ const AppProvider = ({ children }) => {
     project: "Projects",
     education: "Education",
     achievement: "Achievements",
-    summary: "Summary",
     other: "Other",
   };
   const [information, setInformation] = useState({
@@ -39,11 +38,6 @@ const AppProvider = ({ children }) => {
       id: sections.achievement,
       sectionTitle: sections.achievement,
       points: [],
-    },
-    [sections.summary]: {
-      id: sections.summary,
-      sectionTitle: sections.summary,
-      detail: "",
     },
     [sections.other]: {
       id: sections.other,
