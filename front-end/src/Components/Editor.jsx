@@ -5,7 +5,6 @@ import { X } from "react-feather";
 import { useGlobalContext } from "../contextAPI";
 import InputControl from "./InputControl";
 import styles from "./Styles/Editor.module.css";
-
 import EducationBody from "./Sections/EducationBody";
 import ProjectBody from "./Sections/ProjectBody";
 import WorkExpBody from "./Sections/WorkExpBody";

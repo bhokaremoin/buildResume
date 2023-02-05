@@ -16,7 +16,6 @@ import { useGlobalContext } from "../contextAPI";
 const Resume = forwardRef((props, ref) => {
   const { sections, information } = useGlobalContext();
   const containerRef = useRef();
-  console.log(information);
   const [columns, setColumns] = useState([[], []]);
   const [source, setSource] = useState("");
   const [target, setTarget] = useState("");
@@ -29,7 +28,6 @@ const Resume = forwardRef((props, ref) => {
     basicInfo: information[sections.basicInfo],
     other: information[sections.other],
   };
-  console.log(info);
   const getFormattedDate = (value) => {
     if (!value) return "";
     const date = new Date(value);

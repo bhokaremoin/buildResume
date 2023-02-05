@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditIcon from "@mui/icons-material/Edit";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
@@ -98,9 +100,11 @@ const ResumeList = () => {
                           xs={6}
                           // onClick={() => handleClick(data)}
                         >
-                          <Button onClick={handleOpen}>Delete</Button>
+                          <Button onClick={handleOpen}>
+                            <DeleteOutlineIcon />
+                          </Button>
                           <Button onClick={() => handleClick(data)}>
-                            Edit
+                            <EditIcon />
                           </Button>
                           <ResumeListElement key={index} information={data} />
                         </Grid>

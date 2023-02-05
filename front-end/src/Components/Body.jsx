@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 import ReactToPrint from "react-to-print";
 import { ArrowDown } from "react-feather";
+import SaveIcon from "@mui/icons-material/Save";
+import Button from "@mui/material/Button";
 import Resume from "./Resume";
 import styles from "./Styles/Body.module.css";
 import Editor from "./Editor";
@@ -77,7 +79,9 @@ const Body = () => {
         </Grid>
       </div>
       <div>
-        <button onClick={saveResume}>Save Resume</button>
+        <Button onClick={saveResume}>
+          Save Resume <SaveIcon />
+        </Button>
       </div>
     </div>
   );
