@@ -18,8 +18,6 @@ const Resume = forwardRef((props, ref) => {
   const containerRef = useRef();
   const info = props.information;
   const [columns, setColumns] = useState([[], []]);
-  const [source, setSource] = useState("");
-  const [target, setTarget] = useState("");
   const getFormattedDate = (value) => {
     if (!value) return "";
     const date = new Date(value);
@@ -29,9 +27,6 @@ const Resume = forwardRef((props, ref) => {
     [sections.workExp]: (
       <div
         key={"wrokExp"}
-        draggable
-        onDragOver={() => setTarget(info.workExp?.id)}
-        onDragEnd={() => setSource(info.workExp?.id)}
         className={`${styles.section} ${
           info.workExp?.sectionTitle ? "" : styles.hidden
         }`}
@@ -93,17 +88,14 @@ const Resume = forwardRef((props, ref) => {
     [sections.project]: (
       <div
         key={"project"}
-        draggable
-        onDragOver={() => setTarget(info.project?.id)}
-        onDragEnd={() => setSource(info.project?.id)}
         className={`${styles.section} ${
           info.project?.sectionTitle ? "" : styles.hidden
         }`}
       >
         <div className={styles.sectionTitle}>{info.project.sectionTitle}</div>
         <div className={styles.content}>
-          {info.project?.details?.map((item) => (
-            <div className={styles.item}>
+          {info.project?.details?.map((item, index) => (
+            <div className={styles.item} key={index}>
               {item.title ? (
                 <p className={styles.title}>{item.title}</p>
               ) : (
@@ -149,9 +141,6 @@ const Resume = forwardRef((props, ref) => {
     [sections.education]: (
       <div
         key={"education"}
-        draggable
-        onDragOver={() => setTarget(info.education?.id)}
-        onDragEnd={() => setSource(info.education?.id)}
         className={`${styles.section} ${
           info.education?.sectionTitle ? "" : styles.hidden
         }`}
@@ -160,8 +149,8 @@ const Resume = forwardRef((props, ref) => {
           {info.education?.sectionTitle}
         </div>
         <div className={styles.content}>
-          {info.education?.details?.map((item) => (
-            <div className={styles.item}>
+          {info.education?.details?.map((item, index) => (
+            <div className={styles.item} key={index}>
               {item.title ? (
                 <p className={styles.title}>{item.title}</p>
               ) : (
@@ -188,9 +177,6 @@ const Resume = forwardRef((props, ref) => {
     [sections.achievement]: (
       <div
         key={"achievement"}
-        draggable
-        onDragOver={() => setTarget(info.achievement?.id)}
-        onDragEnd={() => setSource(info.achievement?.id)}
         className={`${styles.section} ${
           info.achievement?.sectionTitle ? "" : styles.hidden
         }`}
@@ -213,28 +199,9 @@ const Resume = forwardRef((props, ref) => {
         </div>
       </div>
     ),
-    [sections.summary]: (
-      <div
-        key={"summary"}
-        draggable
-        onDragOver={() => setTarget(info.summary?.id)}
-        onDragEnd={() => setSource(info.summary?.id)}
-        className={`${styles.section} ${
-          info.summary?.sectionTitle ? "" : styles.hidden
-        }`}
-      >
-        <div className={styles.sectionTitle}>{info.summary?.sectionTitle}</div>
-        <div className={styles.content}>
-          <p className={styles.overview}>{info.summary?.detail}</p>
-        </div>
-      </div>
-    ),
     [sections.other]: (
       <div
         key={"other"}
-        draggable
-        onDragOver={() => setTarget(info.other?.id)}
-        onDragEnd={() => setSource(info.other?.id)}
         className={`${styles.section} ${
           info.other?.sectionTitle ? "" : styles.hidden
         }`}
@@ -246,45 +213,12 @@ const Resume = forwardRef((props, ref) => {
       </div>
     ),
   };
-
-  const swapSourceTarget = (source, target) => {
-    if (!source || !target) return;
-    const tempColumns = [[...columns[0]], [...columns[1]]];
-    let sourceRowIndex = tempColumns[0].findIndex((item) => item === source);
-    let sourceColumnIndex = 0;
-    if (sourceRowIndex < 0) {
-      sourceColumnIndex = 1;
-      sourceRowIndex = tempColumns[1].findIndex((item) => item === source);
-    }
-
-    let targetRowIndex = tempColumns[0].findIndex((item) => item === target);
-    let targetColumnIndex = 0;
-    if (targetRowIndex < 0) {
-      targetColumnIndex = 1;
-      targetRowIndex = tempColumns[1].findIndex((item) => item === target);
-    }
-
-    const tempSource = tempColumns[sourceColumnIndex][sourceRowIndex];
-    tempColumns[sourceColumnIndex][sourceRowIndex] =
-      tempColumns[targetColumnIndex][targetRowIndex];
-    tempColumns[targetColumnIndex][targetRowIndex] = tempSource;
-    setColumns(tempColumns);
-  };
   useEffect(() => {
     setColumns([
-      [sections.project, sections.education, sections.summary],
+      [sections.project, sections.education],
       [sections.workExp, sections.achievement, sections.other],
     ]);
   }, []);
-  useEffect(() => {
-    swapSourceTarget(source, target);
-  }, [source]);
-  // useEffect(() => {
-  //   const container = containerRef.current;
-  //   if (!props.activeColor || !container) return;
-  //   container.style.setProperty("--color", props.activeColor);
-  // }, [props.activeColor]);
-
   return (
     <div ref={ref}>
       <div ref={containerRef} className={styles.container}>
