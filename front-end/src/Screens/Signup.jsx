@@ -9,11 +9,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../Components/Navbar";
+import { Link } from "react-router-dom";
 const theme = createTheme();
-const Signup = () => {
-  const navigate = useNavigate();
+const Signup = (props) => {
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -41,14 +39,11 @@ const Signup = () => {
     } else {
       localStorage.setItem("authToken", data.authToken);
       localStorage.setItem("userEmail", credentials.email);
-      navigate("/");
+      props.handleClose();
     }
   };
   return (
     <div>
-      <div>
-        <Navbar />
-      </div>
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
