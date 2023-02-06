@@ -122,7 +122,6 @@ function Editor() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeSectionKey]);
-
   useEffect(() => {
     setActiveInformation(information[sections[activeSectionKey]]);
     // eslint-disable-next-line react-hooks/exhaustive-deps

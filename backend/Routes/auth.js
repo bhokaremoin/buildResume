@@ -11,7 +11,12 @@ const jwtSecert = "securepassword";
 router.post("/createuser", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   let hashPassword = await bcrypt.hash(req.body.password, salt);
+  let email = req.body.email;
   try {
+    let userData = await User.findOne({ email });
+    if (userData) {
+      return res.status(400).json({ errors: "Email already registered." });
+    }
     await User.create({
       name: req.body.name,
       email: req.body.email,

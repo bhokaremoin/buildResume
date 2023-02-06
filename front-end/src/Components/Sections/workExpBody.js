@@ -5,7 +5,7 @@ import styles from "../Styles/Editor.module.css";
 const WorkExpBody = () => {
   const { values, setValues, handlePointUpdate } = useGlobalContext();
   return (
-    <div className={styles.details}>
+    <div className={styles.detail}>
       <div className={styles.row}>
         <InputControl
           label="Title"

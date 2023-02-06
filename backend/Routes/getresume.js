@@ -26,11 +26,11 @@ router.post("/saveResume", async (req, res) => {
         email: req.body.email,
         resumeList: [data],
       }).then(() => {
-        res.json({ success: true });
+        res.status(200).json({ success: true });
       });
     } catch (error) {
       console.log(error.message);
-      res.send("Server Error", error.message);
+      res.status(400).send("Server Error", error.message);
     }
   }
 });
@@ -38,6 +38,9 @@ router.post("/saveResume", async (req, res) => {
 router.post("/getResumeList", async (req, res) => {
   try {
     let id = await ResumeList.findOne({ email: req.body.email });
+    if (!id) {
+      return res.json({ resumeList: [] });
+    }
     res.json({ resumeList: id.resumeList });
   } catch (error) {
     console.log(error.message);

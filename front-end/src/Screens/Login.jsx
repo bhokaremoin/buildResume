@@ -3,17 +3,16 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const theme = createTheme();
 const Login = (props) => {
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -40,9 +39,13 @@ const Login = (props) => {
       localStorage.setItem("authToken", data.authToken);
       localStorage.setItem("userEmail", credentials.email);
       props.handleClose();
+      navigate("/build");
     }
   };
-
+  const handleSignUp = () => {
+    props.handleClose();
+    props.handleOpenSignUp();
+  };
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -92,10 +95,6 @@ const Login = (props) => {
                 value={credentials.password}
                 onChange={handleChange}
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 type="submit"
                 fullWidth
@@ -107,9 +106,9 @@ const Login = (props) => {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link to="/" variant="body2">
+                  <Button onClick={handleSignUp} variant="body2">
                     {"Don't have an account? Sign Up"}
-                  </Link>
+                  </Button>
                 </Grid>
               </Grid>
             </Box>

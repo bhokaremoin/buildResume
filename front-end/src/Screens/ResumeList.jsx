@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import ResumeListElement from "../Components/ResumeListElement";
@@ -46,7 +46,6 @@ const ResumeList = () => {
     fetchMyData();
   }, []);
   const handleClick = (data) => {
-    console.log(data);
     setInformation({
       [sections.basicInfo]: {
         id: sections.basicInfo,
@@ -84,6 +83,7 @@ const ResumeList = () => {
   const handleDelete = () => {
     console.log("delete");
   };
+  const resumeEleRef = useRef();
   return (
     <div>
       <Navbar />
@@ -97,7 +97,9 @@ const ResumeList = () => {
                         <Grid
                           key={index}
                           item
-                          xs={6}
+                          xs={12}
+                          md={6}
+
                           // onClick={() => handleClick(data)}
                         >
                           <Button onClick={handleOpen}>
@@ -106,7 +108,11 @@ const ResumeList = () => {
                           <Button onClick={() => handleClick(data)}>
                             <EditIcon />
                           </Button>
-                          <ResumeListElement key={index} information={data} />
+                          <ResumeListElement
+                            key={index}
+                            ref={resumeEleRef}
+                            information={data}
+                          />
                         </Grid>
                       );
                     })

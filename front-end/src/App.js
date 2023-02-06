@@ -5,6 +5,8 @@ import "./App.css";
 import Login from "./Screens/Login";
 import Signup from "./Screens/Signup";
 import ResumeList from "./Screens/ResumeList";
+import AboutUs from "./Screens/AboutUs";
+import Error from "./Screens/Error";
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +17,8 @@ function App() {
           <Route extact path="/login" element={<Login />} />
           <Route extact path="/signup" element={<Signup />} />
           <Route extact path="/resumelist" element={<ResumeList />} />
+          <Route extact path="/aboutus" element={<AboutUs />} />
+          <Route path="*" element={<Error />} />
         </Routes>
       </div>
     </BrowserRouter>

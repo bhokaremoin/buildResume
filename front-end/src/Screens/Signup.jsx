@@ -9,7 +9,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link } from "react-router-dom";
 const theme = createTheme();
 const Signup = (props) => {
   const [credentials, setCredentials] = useState({
@@ -35,12 +34,16 @@ const Signup = (props) => {
     });
     const data = await response.json();
     if (!data.success) {
-      alert("Enter Valid Credentials");
+      alert("Email Already Registered");
     } else {
       localStorage.setItem("authToken", data.authToken);
       localStorage.setItem("userEmail", credentials.email);
       props.handleClose();
     }
+  };
+  const handleLogin = () => {
+    props.handleClose();
+    props.handleOpenLogin();
   };
   return (
     <div>
@@ -118,9 +121,9 @@ const Signup = (props) => {
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link to="/" variant="body2">
+                  <Button onClick={handleLogin} variant="body2">
                     Already have an account? Sign in
-                  </Link>
+                  </Button>
                 </Grid>
               </Grid>
             </Box>
