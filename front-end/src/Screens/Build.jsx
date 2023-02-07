@@ -7,12 +7,13 @@ const Build = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {
-      navigate("/login");
+      navigate("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
-      <Navbar />
+      <Navbar key="buildnav" />
       <Body />
     </div>
   );

@@ -4,7 +4,7 @@ import Navbar from "../Components/Navbar";
 const AboutUs = () => {
   return (
     <div>
-      <Navbar />
+      <Navbar key="aboutusNav" />
       <h2>About us</h2>
     </div>
   );

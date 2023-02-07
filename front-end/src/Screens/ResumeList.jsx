@@ -23,10 +23,20 @@ const style = {
 };
 const ResumeList = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("authToken")) {
+      navigate("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const [delIndex, setDelIndex] = useState(0);
   const { sections, setInformation } = useGlobalContext();
   const [resumeList, setResumeList] = useState([]);
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = (index) => {
+    setDelIndex(index);
+    setOpen(true);
+  };
   const handleClose = () => setOpen(false);
   const fetchMyData = async () => {
     await fetch("http://localhost:5000/api/getResumeList", {
@@ -80,8 +90,24 @@ const ResumeList = () => {
     });
     navigate("/build");
   };
-  const handleDelete = () => {
-    console.log("delete");
+  const handleDelete = async () => {
+    const resumeListN = resumeList.resumeList.filter(
+      (item, index) => index !== delIndex
+    );
+    let response = await fetch("http://localhost:5000/api/deleteResume", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: localStorage.getItem("userEmail"),
+        resumeList: resumeListN,
+      }),
+    });
+    if (response) {
+      fetchMyData();
+      handleClose();
+    }
   };
   const resumeEleRef = useRef();
   return (
@@ -102,11 +128,17 @@ const ResumeList = () => {
 
                           // onClick={() => handleClick(data)}
                         >
-                          <Button onClick={handleOpen}>
-                            <DeleteOutlineIcon />
+                          <Button
+                            onClick={() => handleOpen(index)}
+                            startIcon={<DeleteOutlineIcon />}
+                          >
+                            Delete
                           </Button>
-                          <Button onClick={() => handleClick(data)}>
-                            <EditIcon />
+                          <Button
+                            onClick={() => handleClick(data)}
+                            startIcon={<EditIcon />}
+                          >
+                            Edit
                           </Button>
                           <ResumeListElement
                             key={index}

@@ -148,6 +148,18 @@ function Editor() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeDetailIndex]);
+  useEffect(() => {
+    handleSubmission({
+      sectionTitle,
+      activeDetailIndex,
+      activeSectionKey,
+      sections,
+      values,
+      information,
+      setInformation,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values]);
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -202,21 +214,6 @@ function Editor() {
           )}
         </div>
         {generateBody()}
-        <button
-          onClick={() =>
-            handleSubmission({
-              sectionTitle,
-              activeDetailIndex,
-              activeSectionKey,
-              sections,
-              values,
-              information,
-              setInformation,
-            })
-          }
-        >
-          Update
-        </button>
       </div>
     </div>
   );

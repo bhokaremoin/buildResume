@@ -48,4 +48,20 @@ router.post("/getResumeList", async (req, res) => {
   }
 });
 
+router.post("/deleteResume", async (req, res) => {
+  try {
+    let response = await ResumeList.findOneAndUpdate(
+      { email: req.body.email },
+      { resumeList: req.body.resumeList }
+    );
+    if (!response) {
+      return res.status(400).json({ success: true });
+    }
+    res.status(200).json({ sucess: true });
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).send("Error", error.message);
+  }
+});
+
 module.exports = router;

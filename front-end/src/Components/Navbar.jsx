@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import DocumentScannerTwoToneIcon from "@mui/icons-material/DocumentScannerTwoTone";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
@@ -76,9 +75,6 @@ const Navbar = () => {
       <AppBar position="static" sx={{ bgcolor: "#6c63ff", mb: 3 }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <DocumentScannerTwoToneIcon
-              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-            />
             <Typography
               variant="h6"
               noWrap
@@ -160,9 +156,6 @@ const Navbar = () => {
                 })}
               </Menu>
             </Box>
-            <DocumentScannerTwoToneIcon
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            />
             <Typography
               variant="h5"
               noWrap

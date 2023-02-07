@@ -76,7 +76,7 @@ const Body = () => {
             <Editor />
           </Grid>
           <Grid item xs={12} md={6}>
-            <Resume ref={resumeRef} activeColor={activeColor} />
+            <Resume key="x" ref={resumeRef} activeColor={activeColor} />
           </Grid>
         </Grid>
       </div>
