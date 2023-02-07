@@ -5,12 +5,12 @@ import { X } from "react-feather";
 import { useGlobalContext } from "../contextAPI";
 import InputControl from "./InputControl";
 import styles from "./Styles/Editor.module.css";
-import EducationBody from "./Sections/EducationBody";
-import ProjectBody from "./Sections/ProjectBody";
-import WorkExpBody from "./Sections/WorkExpBody";
-import BasicInfoBody from "./Sections/BasicInfoBody";
-import AchievementsBody from "./Sections/AchievementsBody";
-import OtherBody from "./Sections/OtherBody";
+import EducationBody from "./Section/EducationBody";
+import ProjectBody from "./Section/ProjectBody";
+import WorkExpBody from "./Section/WorkExpBody";
+import BasicInfoBody from "./Section/BasicInfoBody";
+import AchievementsBody from "./Section/AchievementsBody";
+import OtherBody from "./Section/OtherBody";
 import handleSubmission from "./handleSubmission";
 function Editor() {
   const { sections, information, setInformation, values, setValues } =
