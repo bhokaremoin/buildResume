@@ -30,7 +30,7 @@ const ResumeList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [delIndex, setDelIndex] = useState(0);
-  const { sections, setInformation } = useGlobalContext();
+  const { sections, setInformation, backendURL } = useGlobalContext();
   const [resumeList, setResumeList] = useState([]);
   const [open, setOpen] = React.useState(false);
   const handleOpen = (index) => {
@@ -39,7 +39,7 @@ const ResumeList = () => {
   };
   const handleClose = () => setOpen(false);
   const fetchMyData = async () => {
-    await fetch("http://localhost:5000/api/getResumeList", {
+    await fetch(`${backendURL}/api/getResumeList`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +94,7 @@ const ResumeList = () => {
     const resumeListN = resumeList.resumeList.filter(
       (item, index) => index !== delIndex
     );
-    let response = await fetch("http://localhost:5000/api/deleteResume", {
+    let response = await fetch(`${backendURL}/api/deleteResume`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

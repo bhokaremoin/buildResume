@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 const Body = () => {
   const navigate = useNavigate();
-  const { activeColor, information, sections } = useGlobalContext();
+  const { activeColor, information, sections, backendURL } = useGlobalContext();
   const resumeRef = useRef();
   const saveResume = async (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ const Body = () => {
       basicInfo: information[sections.basicInfo],
       other: information[sections.other],
     };
-    let response = await fetch("http://localhost:5000/api/saveResume", {
+    let response = await fetch(`${backendURL}/api/saveResume`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

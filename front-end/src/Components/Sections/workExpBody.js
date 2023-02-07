@@ -25,17 +25,6 @@ const WorkExpBody = () => {
         />
       </div>
       <div className={styles.row}>
-        {/* <InputControl
-          label="Certificate Link"
-          placeholder="Enter certificate link"
-          value={values.certificationLink}
-          onChange={(event) =>
-            setValues((prev) => ({
-              ...prev,
-              certificationLink: event.target.value,
-            }))
-          }
-        /> */}
         <InputControl
           label="Location"
           placeholder="Enter location eg. Remote"

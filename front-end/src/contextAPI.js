@@ -61,6 +61,7 @@ const AppProvider = ({ children }) => {
     tempValues.points[index] = value;
     setValues(tempValues);
   };
+  const backendURL = "http://localhost:5000";
   return (
     <AppContext.Provider
       value={{
@@ -73,6 +74,7 @@ const AppProvider = ({ children }) => {
         values,
         setValues,
         handlePointUpdate,
+        backendURL,
       }}
     >
       {children}

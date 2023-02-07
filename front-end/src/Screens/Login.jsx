@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../contextAPI";
 const theme = createTheme();
 const Login = (props) => {
   const navigate = useNavigate();
@@ -20,9 +21,10 @@ const Login = (props) => {
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
+  const { backendURL } = useGlobalContext();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/loginuser", {
+    const response = await fetch(`${backendURL}/api/loginuser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

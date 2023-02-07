@@ -9,6 +9,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useGlobalContext } from "../contextAPI";
 const theme = createTheme();
 const Signup = (props) => {
   const [credentials, setCredentials] = useState({
@@ -19,9 +20,10 @@ const Signup = (props) => {
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
+  const { backendURL } = useGlobalContext();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/createuser", {
+    const response = await fetch(`${backendURL}/api/createuser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
