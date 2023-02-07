@@ -54,6 +54,7 @@ const ResumeList = () => {
   };
   useEffect(() => {
     fetchMyData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleClick = (data) => {
     setInformation({
