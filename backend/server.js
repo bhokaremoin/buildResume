@@ -7,8 +7,8 @@ mongoDB();
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://buildResume.onrender.com",
-    "http://localhost:3000"
+    "https://buildresume.onrender.com"
+    // "http://localhost:3000"
   );
   res.header(
     "Access-Control-Allow-Headers",
