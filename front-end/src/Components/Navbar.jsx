@@ -124,24 +124,24 @@ const Navbar = () => {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => {
+                {pages.map((page, index) => {
                   if (
                     page === pages[0] &&
                     window.location.href.slice(22) === "resumelist"
                   ) {
-                    return <span />;
+                    return <span key={index} />;
                   }
                   if (
                     page === pages[1] &&
                     window.location.href.slice(22) === "build"
                   ) {
-                    return <span />;
+                    return <span key={index} />;
                   }
                   if (
                     page === pages[2] &&
                     window.location.href.slice(22) === "aboutus"
                   ) {
-                    return <span />;
+                    return <span key={index} />;
                   }
                   return (
                     <MenuItem key={page} onClick={handleCloseNavMenu}>
@@ -176,24 +176,24 @@ const Navbar = () => {
               Build Resume
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => {
+              {pages.map((page, index) => {
                 if (
                   page === pages[0] &&
                   window.location.href.slice(22) === "resumelist"
                 ) {
-                  return <span />;
+                  return <span key={index} />;
                 }
                 if (
                   page === pages[1] &&
                   window.location.href.slice(22) === "build"
                 ) {
-                  return <span />;
+                  return <span key={index} />;
                 }
                 if (
                   page === pages[2] &&
                   window.location.href.slice(22) === "aboutus"
                 ) {
-                  return <span />;
+                  return <span key={index} />;
                 }
                 return (
                   <Button

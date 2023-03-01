@@ -4,17 +4,13 @@ const port = 5000;
 const mongoDB = require("./database");
 mongoDB();
 app.use((req, res, next) => {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "https://buildresume.onrender.com"
-  );
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type,Accept"
   );
   next();
 });
-// app.use(cors);
 app.use(express.json());
 app.use("/api", require("./Routes/auth"));
 app.use("/api", require("./Routes/getresume"));
