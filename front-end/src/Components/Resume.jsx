@@ -31,7 +31,10 @@ const Resume = forwardRef((props, ref) => {
   const getFormattedDate = (value) => {
     if (!value) return "";
     const date = new Date(value);
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    const returnDate = `${date.getDate()}/${
+      date.getMonth() + 1
+    }/${date.getFullYear()}`;
+    return returnDate;
   };
   const sectionDiv = {
     [sections.workExp]: (
@@ -67,8 +70,9 @@ const Resume = forwardRef((props, ref) => {
               )}
               {item.startDate && item.endDate ? (
                 <div className={styles.date}>
-                  {getFormattedDate(item.startDate) -
-                    getFormattedDate(item.endDate)}{" "}
+                  <Calendar />
+                  {getFormattedDate(item.startDate)} -
+                  {getFormattedDate(item.endDate)}{" "}
                 </div>
               ) : (
                 <div />
@@ -110,8 +114,8 @@ const Resume = forwardRef((props, ref) => {
       >
         <div className={styles.sectionTitle}>{info.project.sectionTitle}</div>
         <div className={styles.content}>
-          {info.project?.details?.map((item) => (
-            <div className={styles.item}>
+          {info.project?.details?.map((item, index) => (
+            <div className={styles.item} key={index}>
               {item.title ? (
                 <p className={styles.title}>{item.title}</p>
               ) : (
@@ -168,8 +172,8 @@ const Resume = forwardRef((props, ref) => {
           {info.education?.sectionTitle}
         </div>
         <div className={styles.content}>
-          {info.education?.details?.map((item) => (
-            <div className={styles.item}>
+          {info.education?.details?.map((item, index) => (
+            <div className={styles.item} key={index}>
               {item.title ? (
                 <p className={styles.title}>{item.title}</p>
               ) : (
