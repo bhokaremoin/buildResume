@@ -61,8 +61,8 @@ const AppProvider = ({ children }) => {
     tempValues.points[index] = value;
     setValues(tempValues);
   };
-  const backendURL = "https://buildresume-server.onrender.com";
-  // const backendURL = "http://localhost:5000";
+  // const backendURL = "https://buildresume-server.onrender.com";
+  const backendURL = "http://localhost:5000";
   return (
     <AppContext.Provider
       value={{
